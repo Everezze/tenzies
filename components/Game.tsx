@@ -1,19 +1,22 @@
 import Dice from "./Dice";
 
 export default function Game(props){
+	console.log("array numbers is: ",props.numbers);
+	console.log("func is:",props.toggleActive);
+	console.log("isWon value: ",props.isWon);
 	let diceArray = [];
-	let numberToInsert = null;
-	for(let i=0;i<10;i++){
-		if(props.numbers === null){
-			numberToInsert = Math.floor(Math.random() * 6) + 1;
-		}else{
-			numberToInsert = props.numbers[i];
-		}
-		diceArray.push(<Dice key={i} int={numberToInsert} />)
-	}
+	for(let i=0;i<props.numbers.length;i++){
+		diceArray.push(<Dice key={i} int={props.numbers[i].num} position={i} toggleActive={props.toggleActive} />)
+	};
+
 	return (
 		<article>
-			{diceArray}
+			<div>
+				{diceArray}
+			</div>
+			<button onClick={props.btnAction}>
+				{props.isWon ? "Replay":"Roll"}
+			</button>
 		</article>
 	)
 }

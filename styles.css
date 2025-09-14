@@ -10,8 +10,53 @@ h1,h2,h3,p{
 	margin: 0;
 }
 
+#root{
+	max-width: 500px;
+	margin: 0 auto;
+	padding: 1rem;
+}
+
+#root > *+*{
+	margin: 1rem 0;
+}
+
+article{
+	text-align: center;
+}
+
+article div{
+	display: flex;
+	gap:1rem;
+	flex-wrap: wrap;
+}
+
 .dice{
 	display: inline-block;
-	padding: .75rem;
+	padding: .75rem 1rem;
 	font-weight: bold;
+	border:1px solid black;
+	flex-basis: calc(20% - 1rem);
+	cursor: pointer;
+}
+
+.dice:hover{
+	background:grey;
+	color:white;
+}
+
+.dice.active{
+	background: green;
+	color:white;
+}
+
+button{
+	border: none;
+	background: purple;
+	color:white;
+	padding: .5em 1em;
+	font-weight: bold;
+	border-radius: .2em;
+	margin-top: 1rem;
+	cursor: pointer;
+	font-size: 1rem;
 }
