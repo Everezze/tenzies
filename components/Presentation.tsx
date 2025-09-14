@@ -1,5 +1,5 @@
 export default function Presentation(){
 	return (
-		<h2>header here</h2>
+		<h2>Match all dice to have the same number</h2>
 	)
 }
