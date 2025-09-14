@@ -6,7 +6,13 @@ export default function Game(props){
 	console.log("isWon value: ",props.isWon);
 	let diceArray = [];
 	for(let i=0;i<props.numbers.length;i++){
-		diceArray.push(<Dice key={i} int={props.numbers[i].num} position={i} toggleActive={props.toggleActive} />)
+		diceArray.push(
+			<Dice key={i} 
+			int={props.numbers[i].num}
+			position={i}
+			toggleActive={props.toggleActive} 
+			frozen={props.numbers[i].frozen} />
+		)
 	};
 
 	return (

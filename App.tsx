@@ -20,20 +20,16 @@ export default function App(){
 	}
 
 	function toggleActive(e){
-		console.log("toggling active class");
-		const el = e.currentTarget;
-		const elIndex = el.dataset.id;
-		if(el.classList.contains("active")){
-			el.classList.remove("active");
-			numbers[elIndex].frozen = false;
-		}else{
-			el.classList.add("active");
-			numbers[elIndex].frozen = true;
-			if(checkWin()){
-				setIsWon(true);
-			};
-		};
-	}
+		const targetIndex = e.currentTarget.dataset.id;
+		setNumbers(
+			numbers.map((numObj,index)=> {
+				if(index == targetIndex){
+					return {...numObj,frozen: !numObj.frozen};
+				};
+				return numObj;
+			})
+		);
+	};
 
 	function checkWin(){
 		let targetNum = null;
