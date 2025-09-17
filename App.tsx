@@ -4,8 +4,7 @@ import Game from "./components/Game"
 import React from "react"
 
 export default function App(){
-	console.log("drawing app");
-	let [firstGame,setFirstGame] = React.useState(true);
+	let [isWon, setIsWon] = React.useState(false);
 	let [numbers,setNumbers] = React.useState(()=>{
 		let tempArray = [];
 		for(let i =0;i<10;i++){
@@ -14,20 +13,32 @@ export default function App(){
 		}
 		return tempArray;
 	});
-	let [isWon, setIsWon] = React.useState(false);
-	const numOfFrozen = numbers.filter(numObj => numObj.frozen).length;
 
-	if(numbers.length){
-		if(!isWon && numOfFrozen == numbers.length){
-			setIsWon(true);
-			return;
-		}
-	};
+	function checkWin(){
+		let targetNum = null;
+		let numOfDice = 0;
+		const numOfFrozen = numbers.filter(numObj => {
+			if(numObj.frozen){
+				if(!targetNum){
+					targetNum = numObj.num;
+				}
+				if(targetNum == numObj.num){
+					numOfDice +=1;
+				}
+				return numObj;
+			}
+		}).length;
+
+		if(numbers.length && numOfDice == numbers.length){
+			if(!isWon ){
+				setIsWon(true);
+				return;
+			}
+		};
+	}
 
 	function toggleActive(e){
 		const targetIndex = e.currentTarget.dataset.id;
-		console.log(numOfFrozen, "==?",numbers.length);
-		console.log("equal or not:",numOfFrozen == numbers.length);
 		setNumbers(
 			numbers.map((numObj,index)=> {
 				if(index == targetIndex){
@@ -38,23 +49,28 @@ export default function App(){
 		);
 	};
 
-	function generateNewNumbers(){
+	function generateNewNumbers(event,reset){
 		setNumbers(prevNumbers => {
 			const tempNumbers = prevNumbers.map(numObj => {
-				if(!numObj.frozen){
-					let randomInt = Math.floor(Math.random() * 6) + 1;
+				let randomInt = Math.floor(Math.random() * 6) + 1;
+				if(reset){
+					return {num:randomInt,frozen:false};
+				}
+				else if(!numObj.frozen){
 					return {...numObj,num:randomInt};
 				}
 				return numObj;
 			})
 			return tempNumbers;
-		})
-	}
+		});
+	};
 
 	function restartGame(){
-		setNumbers([]);
 		setIsWon(false);
+		generateNewNumbers(null,true);
 	}
+
+	checkWin();
 
 	return (
 		<>
